@@ -44,7 +44,7 @@ def halt_until_downloaded(filepath):
         sleep(0.05)
 
     # wait file is readable
-    while os.path.getsize(filepath)<1111:
+    while os.path.getsize(filepath)<1000:
         print('Waiting on file '+str(filepath))
         sleep(0.05)
 
@@ -55,8 +55,8 @@ def halt_until_downloaded(filepath):
         if s1==s2:
             return
 
-s = 2
-# s = 1200
+# s = 2
+s = 570
 n = 7613+2
 for i in range(s,n):
     # find element and click on it
@@ -89,8 +89,6 @@ for i in range(s,n):
 
 # for optionValue in optionsList:
 	# print("starting loop on option " + str(optionValue))
-
-
 
 
 print('Scraping complete, closing browser...')
