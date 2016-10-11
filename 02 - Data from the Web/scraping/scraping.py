@@ -38,27 +38,43 @@ radiobtn.click()
 okbtn = driver.find_element_by_name('dummy')
 okbtn.click()
 
-# s = 2
-s = 1632
+def halt_until_downloaded(filepath):
+    # wait filename exists
+    while not(os.path.isfile(filepath)):
+        sleep(0.05)
+
+    # wait file is readable
+    while os.path.getsize(filepath)<1111:
+        print('Waiting on file '+str(filepath))
+        sleep(0.05)
+
+    while True:
+        s1 = os.path.getsize(filepath)
+        sleep(0.05)
+        s2 = os.path.getsize(filepath)
+        if s1==s2:
+            return
+
+s = 2
+# s = 1200
 n = 7613+2
 for i in range(s,n):
-        # find element and click on it
-	test = driver.find_element_by_xpath("(//a[@class='ww_x_GPS'])["+str(i)+"]")
-        print(test.text + " " + str(i))
-	test.click()
+    # find element and click on it
+    test = driver.find_element_by_xpath("(//a[@class='ww_x_GPS'])["+str(i)+"]")
+    print(test.text + " " + str(i))
+    test.click()
 
-        # wait for download
-        while len(glob.glob(download_path+'/!GEDPUBLICREPORTS.XLS')) == 0:
-            sleep(0.05)
+    # wait for download and wait download complete
+    halt_until_downloaded(download_path+'/!GEDPUBLICREPORTS.XLS')
 
-        # rename file with version to manage duplicates
-        fversion = str(len(glob.glob(download_path+'/'+"".join(test.text.split())+"*")))
-        filename = "/"+"".join(test.text.replace('/','').split())+"_"+fversion+'.XLS'
-        os.rename(download_path+'/!GEDPUBLICREPORTS.XLS', download_path+filename)
+    # rename file with version to manage duplicates
+    fversion = str(len(glob.glob(download_path+'/'+"".join(test.text.split())+"*")))
+    filename = "/"+"".join(test.text.replace('/','-').split())+"_"+fversion+'.XLS'
+    os.rename(download_path+'/!GEDPUBLICREPORTS.XLS', download_path+filename)
 
-        # wait rename is done
-        while len(glob.glob(download_path+'/'+filename))==0:
-            sleep(0.05)
+    # wait rename is done
+    halt_until_downloaded(download_path+'/'+filename)
+
 
 
 # ------ LOOP ON SELECT MENU METHOD ------- (NOT IMPLEMENTED)
