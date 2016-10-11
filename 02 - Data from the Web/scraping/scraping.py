@@ -46,7 +46,8 @@ okbtn = driver.find_element_by_name('dummy')
 okbtn.click()
 
 # test = driver.find_element_by_class_name('ww_x_GPS')
-n = 10 # 7613+2
+# n = 10
+n = 7613+2
 for i in range(2,n):
 	test = driver.find_element_by_xpath("(//a[@class='ww_x_GPS'])["+str(i)+"]")
 	test.click()
@@ -55,7 +56,8 @@ for i in range(2,n):
         while glob.glob(download_path+'/*.part'):
             sleep(0.05)
         print(test.text)
-        os.rename(download_path+'/!GEDPUBLICREPORTS.XLS', download_path+"/"+"".join(test.text.split())+'.XLS')
+        fversion = str(len(glob.glob(download_path+'/'+"".join(test.text.split())+"*")))
+        os.rename(download_path+'/!GEDPUBLICREPORTS.XLS', download_path+"/"+"".join(test.text.split())+"_"+fversion+'.XLS')
         while glob.glob(download_path+'/'+"".join(test.text.split())):
             sleep(0.05)
 
