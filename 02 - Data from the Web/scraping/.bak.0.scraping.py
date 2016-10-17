@@ -5,24 +5,14 @@ from selenium import webdriver
 from selenium.webdriver.support.ui import Select, WebDriverWait
 
 
-def print_elements_by_name(driver):
-	ids = driver.find_elements_by_xpath('//*[@name]')
-	for ii in ids:
-    		print ii.get_attribute('name')    # id name as string
-
-# names = ['ww_i_reportModelXsl', 'zz_x_UNITE_ACAD0', 'ww_x_UNITE_ACAD', 'zz_x_PERIODE_ACAD', 'ww_x_PERIODE_ACAD', 'zz_x_PERIODE_PEDAGO', 'ww_x_PERIODE_PEDAGO', 'zz_x_HIVERETE', 'ww_x_HIVERETE']
-
-# !!! DOWNLOAD FOLDER MUST BE EMPTY !!!
-download_path = "/home/khaos/Downloads"
+# ------- SETUP VARIABLES -------
+# manually setup variables for the program
+download_path = "/home/khaos/Downloads" # !!! DOWNLOAD FOLDER MUST BE EMPTY !!!
 url = 'http://isa.epfl.ch/imoniteur_ISAP/%21gedpublicreports.htm?ww_i_reportmodel=133685247'
 
 # ------- INITIALIZATION -------
+# setup profile of the browser
 profile = webdriver.FirefoxProfile()
-# profile.set_preference('browser.download.folderList', 2)
-# profile.set_preference('browser.download.manager.showWhenStarting', False)
-# profile.set_preference('browser.download.dir', os.getcwd())
-# profile.set_preference('browser.helperApps.neverAsk.saveToDisk', 'XLS')
-# driver = webdriver.Firefox(profile)
 profile.set_preference("browser.download.panel.shown", False)
 profile.set_preference("browser.helperApps.neverAsk.openFile","text/csv,application/vnd.ms-excel")
 profile.set_preference("browser.helperApps.neverAsk.saveToDisk", "text/csv,application/vnd.ms-excel")
@@ -30,36 +20,64 @@ profile.set_preference("browser.download.folderList", 2);
 profile.set_preference("browser.download.dir", download_path)
 driver = webdriver.Firefox(profile)
 
+# load URL and wait that it is loaded
 driver.get(url)
 driver.implicitly_wait(60)
 
+# go to the frame containing the select menu
 driver.switch_to_frame(driver.find_element_by_name('toc'))
 
-# print_elements_by_name(driver)
-
+# ------- SCRAPING -------
 print('Start scraping website...')
 
+# find and click radio button for xls format
 radiobtn = driver.find_element_by_xpath("//input[@name='ww_i_reportModelXsl'][@value='133685271']")
 radiobtn.click()
 
+# find and click on OK button
 okbtn = driver.find_element_by_name('dummy')
 okbtn.click()
 
-# test = driver.find_element_by_class_name('ww_x_GPS')
-n = 10 # 7613+2
-for i in range(2,n):
-	test = driver.find_element_by_xpath("(//a[@class='ww_x_GPS'])["+str(i)+"]")
-	test.click()
-        while len(glob.glob(download_path+'/*.XLS')) <= i-2:
-            sleep(0.05)
-        while glob.glob(download_path+'/*.part'):
-            sleep(0.05)
-        print(test.text)
-        os.rename(download_path+'/!GEDPUBLICREPORTS.XLS', download_path+"/"+"".join(test.text.split())+'.XLS')
-        while glob.glob(download_path+'/'+"".join(test.text.split())):
-            sleep(0.05)
+def halt_until_downloaded(filepath):
+    # wait filename exists
+    while not(os.path.isfile(filepath)):
+        sleep(0.05)
 
-# ------ LOOP METHOD -------
+    # wait file is readable
+    while os.path.getsize(filepath)<1000:
+        print('Waiting on file '+str(filepath))
+        sleep(0.05)
+
+    while True:
+        s1 = os.path.getsize(filepath)
+        sleep(0.05)
+        s2 = os.path.getsize(filepath)
+        if s1==s2:
+            return
+
+# s = 2
+s = 570
+n = 7613+2
+for i in range(s,n):
+    # find element and click on it
+    test = driver.find_element_by_xpath("(//a[@class='ww_x_GPS'])["+str(i)+"]")
+    print(test.text + " " + str(i))
+    test.click()
+
+    # wait for download and wait download complete
+    halt_until_downloaded(download_path+'/!GEDPUBLICREPORTS.XLS')
+
+    # rename file with version to manage duplicates
+    fversion = str(len(glob.glob(download_path+'/'+"".join(test.text.split())+"*")))
+    filename = "/"+"".join(test.text.replace('/','-').split())+"_"+fversion+'.XLS'
+    os.rename(download_path+'/!GEDPUBLICREPORTS.XLS', download_path+filename)
+
+    # wait rename is done
+    halt_until_downloaded(download_path+'/'+filename)
+
+
+
+# ------ LOOP ON SELECT MENU METHOD ------- (NOT IMPLEMENTED)
 # loop over an element
 # select = driver.find_element_by_name('ww_x_PERIODE_ACAD')
 # options = select.find_elements_by_tag_name('option')
@@ -73,7 +91,5 @@ for i in range(2,n):
 	# print("starting loop on option " + str(optionValue))
 
 
-
-
-print('Script ended')
-# driver.quit()
+print('Scraping complete, closing browser...')
+driver.quit()
