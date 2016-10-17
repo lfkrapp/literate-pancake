@@ -55,13 +55,10 @@ def halt_until_downloaded(filepath):
         if s1==s2:
             return
 
-# s = 2
-s = 570
-n = 7613+2
-for i in range(s,n):
+list_of_matches = driver.find_elements_by_xpath("//*[contains(text(), 'Informatique, 20')]")
+for test in list_of_matches:
     # find element and click on it
-    test = driver.find_element_by_xpath("(//a[@class='ww_x_GPS'])["+str(i)+"]")
-    print(test.text + " " + str(i))
+    print(test.text)
     test.click()
 
     # wait for download and wait download complete
@@ -74,22 +71,6 @@ for i in range(s,n):
 
     # wait rename is done
     halt_until_downloaded(download_path+'/'+filename)
-
-
-
-# ------ LOOP ON SELECT MENU METHOD ------- (NOT IMPLEMENTED)
-# loop over an element
-# select = driver.find_element_by_name('ww_x_PERIODE_ACAD')
-# options = select.find_elements_by_tag_name('option')
-
-# optionsList = []
-
-# for option in options:
-	# optionsList.append(option.get_attribute("value"))
-
-# for optionValue in optionsList:
-	# print("starting loop on option " + str(optionValue))
-
 
 print('Scraping complete, closing browser...')
 driver.quit()
