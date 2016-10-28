@@ -33,3 +33,4 @@ by the time you mapped the top-95% of the universities. I also recommend you to 
 between the areas divided by the [Röstigraben](https://en.wikipedia.org/wiki/R%C3%B6stigraben)?
 
 *HINT*: for those cantons cut through by the Röstigraben, [this viz](http://p3.snf.ch/Default.aspx?id=allcharts) can be helpful!
+<iframe width='100%' height="350" src="ch_map.html"></iframe>
