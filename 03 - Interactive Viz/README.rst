@@ -1,6 +1,5 @@
-#![alt tag](https://raw.githubusercontent.com/fkrapp/literate-pancake/blob/master/03%20-%20Interactive%20Viz/chmap.html)
 
-`Live example <http://yocto.ddns.net/chmap.html>`__
+`Live example [CLICK HERE] <http://yocto.ddns.net/chmap.html>`__
 
 
 
