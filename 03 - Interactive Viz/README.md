@@ -1,3 +1,6 @@
+![alt tag](https://raw.githubusercontent.com/fkrapp/literate-pancake/blob/master/03%20-%20Interactive%20Viz/chmap.html)
+
+
 # 03 - Interactive Viz
 
 ## Deadline
