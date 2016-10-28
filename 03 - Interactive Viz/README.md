@@ -1,8 +1,4 @@
 
-`Live example [CLICK HERE] <http://yocto.ddns.net/chmap.html>`__
-
-
-
 # 03 - Interactive Viz
 
 ## Deadline
