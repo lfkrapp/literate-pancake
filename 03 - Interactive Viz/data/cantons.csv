@@ -1,27 +1,27 @@
-acronym,canton
-AG,Aargau
-AI,Appenzell Innerrhoden
-AR,Appenzell Ausserrhoden
-BS,Basel-City
-BL,Basel-Landschaft
-BE,Bern
-FR,Fribourg
-GE,Geneva
-GL,Glarus
-GR,Graubunden
-JU,Jura
-LU,Lucerne
-NE,Neuchatel
-NW,Nidwalden
-OW,Obwalden
-SH,Schaffhausen
-SZ,Schwyz
-SO,Solothurn
-SG,Saint Gallen
-TG,Thurgau
-TI,Ticino
-UR,Uri
-VS,Valais
-VD,Vaud
-ZG,Zug
-ZH,Zurich
+acronym,canton,language
+AG,Aargau,GER
+AI,Appenzell Innerrhoden,GER
+AR,Appenzell Ausserrhoden,GER
+BS,Basel-City,GER
+BL,Basel-Landschaft,GER
+BE,Bern,GER
+FR,Fribourg,FRA
+GE,Geneva,FRA
+GL,Glarus,GER
+GR,Graubunden,GER
+JU,Jura,FRA
+LU,Lucerne,GER
+NE,Neuchatel,FRA
+NW,Nidwalden,GER
+OW,Obwalden,GER
+SH,Schaffhausen,GER
+SZ,Schwyz,GER
+SO,Solothurn,GER
+SG,Saint Gallen,GER
+TG,Thurgau,GER
+TI,Ticino,ITA
+UR,Uri,GER
+VS,Valais,FRA
+VD,Vaud,FRA
+ZG,Zug,GER
+ZH,Zurich,GER
